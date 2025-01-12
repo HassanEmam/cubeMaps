@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 const CubemapViewer = ({ cubemapImages }) => {
   const mountRef = useRef(null);
@@ -44,10 +45,13 @@ const CubemapViewer = ({ cubemapImages }) => {
     scene.background = cubemap;
 
     camera.position.z = 1;
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = true;
 
     const animate = () => {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
+      controls.update();
     };
     animate();
 
